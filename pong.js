@@ -6,11 +6,30 @@ function Ball() {
     this.vy = 5;
 }
 
+function Paddle(paddle_id, left_position, right_position){
+    this.id = paddle_id;
+    this.left = left_position;
+    this.top = 30;
+    this.right = right_position;
+    this.place_paddle = function (){
+        console.log(this.id);
+        let paddleElement = document.getElementById(this.id);
+        console.log(paddleElement.getBoundingClientRect());
+        if (this.id === "left-paddle"){
+            paddleElement.style.left = this.left + "px";
+        } else {
+            paddleElement.style.right = this.right + "px";
+        }
+        paddleElement.style.top = this.top + "%";
+
+    }
+}
+
 function placeObjects(objects) {
     for (let object of objects) {
         let element = document.getElementById(object.id);
-        element.style.left = "" + object.x + "px";
-        element.style.top = "" + object.y + "px";
+        element.style.left = object.x + "px";
+        element.style.top = object.y + "px";
     }
 }
 
@@ -47,15 +66,22 @@ function ball_bounce(ball){
 }
 
 let ball;
+let leftPaddle;
+let rightPaddle;
 
 function init() {
     ball = new Ball();
+    leftPaddle = new Paddle("left-paddle", 10, 0);
+    rightPaddle = new Paddle("right-paddle", 0, 10);
 
-    // Ensure the DOM is fully loaded before initializing
-    document.addEventListener("DOMContentLoaded", function () {
-        setInterval(update, 100);
-        //update();
-    });
+    leftPaddle.place_paddle();
+    rightPaddle.place_paddle();
+
+    setInterval(update, 100);
+    //update();
 }
 
-init(); // Call init function to start the animation
+// Ensure the DOM is fully loaded before initializing
+document.addEventListener("DOMContentLoaded", function () {
+   init() // Call init function to start the animation
+});

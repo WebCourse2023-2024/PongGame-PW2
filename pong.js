@@ -6,6 +6,7 @@ function Ball() {
     this.vy = 5;
 }
 
+
 function Paddle(paddle_id, left_position, right_position){
     this.id = paddle_id;
     this.left = left_position;
@@ -25,6 +26,45 @@ function Paddle(paddle_id, left_position, right_position){
     }
 }
 
+
+function Buttons(){
+    this.p1_up = false;
+    this.p1_down = false;
+    this.p2_up = false;
+    this.p2_down = false;
+}
+
+
+let buttons = new Buttons();
+
+
+function track_player_input(event) {
+    if (event.type === "keydown") {
+        switch (event.key) {
+            case "a":
+                buttons.p1_up = true; break;
+            case "q":
+                buttons.p1_down = true; break;
+            case "p":
+                buttons.p2_up = true; break;
+            case "m":
+                buttons.p2_down = true; break;
+        }
+    } else if (event.type === "keyup") {
+        switch (event.key) {
+            case "a":
+                buttons.p1_up = false; break;
+            case "q":
+                buttons.p1_down = false; break;
+            case "p":
+                buttons.p2_up = false; break;
+            case "m":
+                buttons.p2_down = false; break;
+        }
+    }
+}
+
+
 function placeObjects(objects) {
     for (let object of objects) {
         let element = document.getElementById(object.id);
@@ -32,6 +72,7 @@ function placeObjects(objects) {
         element.style.top = object.y + "px";
     }
 }
+
 
 function update() {
     ball.x += ball.vx;
@@ -50,6 +91,7 @@ function update() {
     // console.log(rightPaddle.getBoundingClientRect());
 }
 
+
 function ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
@@ -65,9 +107,11 @@ function ball_bounce(ball){
     }
 }
 
+
 let ball;
 let leftPaddle;
 let rightPaddle;
+
 
 function init() {
     ball = new Ball();
@@ -80,6 +124,7 @@ function init() {
     setInterval(update, 100);
     //update();
 }
+
 
 // Ensure the DOM is fully loaded before initializing
 document.addEventListener("DOMContentLoaded", function () {

@@ -35,13 +35,15 @@ function ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
     let bodyProperties = bodyElement.getBoundingClientRect();
-    console.log(bodyProperties);
+    let bottomWall = document.getElementById("bottom-wall");
+    bottomWall = bottomWall.getBoundingClientRect();
+    //console.log(bodyProperties);
 
-    if (ball.x < 0 || ball.x > bodyProperties.width){
+    if (ball.x < 0 || ball.x > bodyProperties.width - 60){
         ball.vx *= -1;
     }
 
-    if (ball.y < 0 || ball.y > bodyProperties.height){
+    if (ball.y < 0 || ball.y > bottomWall.top - 63){
         ball.vy *= -1;
     }
 }
@@ -54,6 +56,7 @@ function init() {
     // Ensure the DOM is fully loaded before initializing
     document.addEventListener("DOMContentLoaded", function () {
         setInterval(update, 100);
+        //update();
     });
 }
 

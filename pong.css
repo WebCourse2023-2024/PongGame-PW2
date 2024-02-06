@@ -1,0 +1,36 @@
+#ball{
+    width: 64px;
+    height: 64px;
+}
+
+.paddle{
+    width: 40px;
+    height: 250px;
+    top: 32%;
+}
+
+#left-paddle{
+    position: relative;
+    left: 10px;
+}
+
+#right-paddle{
+    position: relative;
+    left: 89%;
+}
+
+#ball{
+    position: relative;
+    left: 50%;
+    top: 25%;
+}
+
+body {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: 0px;
+}
+

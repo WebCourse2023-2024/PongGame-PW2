@@ -35,15 +35,13 @@ function ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
     let bodyProperties = bodyElement.getBoundingClientRect();
-    let bottomWall = document.getElementById("bottom-wall");
-    bottomWall = bottomWall.getBoundingClientRect();
     //console.log(bodyProperties);
 
     if (ball.x < 0 || ball.x > bodyProperties.width - 60){
         ball.vx *= -1;
     }
 
-    if (ball.y < 0 || ball.y > bottomWall.top - 63){
+    if (ball.y < 0 || ball.y > bodyProperties.height - 63){
         ball.vy *= -1;
     }
 }

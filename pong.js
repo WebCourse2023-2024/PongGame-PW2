@@ -9,29 +9,30 @@ function Ball() {
 function placeObjects(objects) {
     for (let object of objects) {
         let element = document.getElementById(object.id);
-        element.style.left = object.x + "px";
-        element.style.top = object.y + "px";
+        element.style.left = "" + object.x + "px";
+        element.style.top = "" + object.y + "px";
     }
 }
 
 function update() {
-    // ball.x += ball.vx;
-    // ball.y += ball.vy;
+    ball.x += ball.vx;
+    ball.y += ball.vy;
     placeObjects([ball]);
     ball_bounce(ball);
 
-    let ballElement = document.getElementById("ball");
-    let ballProperties = ballElement.getBoundingClientRect();
-    console.log(ballProperties);
-
-    let leftPaddle = document.getElementById("left-paddle");
-    console.log(leftPaddle.getBoundingClientRect());
-
-    let rightPaddle = document.getElementById("right-paddle");
-    console.log(rightPaddle.getBoundingClientRect());
+    // let ballElement = document.getElementById("ball");
+    // let ballProperties = ballElement.getBoundingClientRect();
+    // //console.log(ballProperties);
+    //
+    // let leftPaddle = document.getElementById("left-paddle");
+    // console.log(leftPaddle.getBoundingClientRect());
+    //
+    // let rightPaddle = document.getElementById("right-paddle");
+    // console.log(rightPaddle.getBoundingClientRect());
 }
 
 function ball_bounce(ball){
+
     let bodyElement = document.querySelector("body");
     let bodyProperties = bodyElement.getBoundingClientRect();
     console.log(bodyProperties);
@@ -52,8 +53,7 @@ function init() {
 
     // Ensure the DOM is fully loaded before initializing
     document.addEventListener("DOMContentLoaded", function () {
-        //setInterval(update, 100);
-        update();
+        setInterval(update, 100);
     });
 }
 

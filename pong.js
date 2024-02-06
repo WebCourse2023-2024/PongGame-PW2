@@ -2,6 +2,8 @@ function Ball() {
     this.id = "ball";
     this.x = 0;
     this.y = 0;
+    this.vx = 5;
+    this.vy = 5;
 }
 
 function placeObjects(objects) {
@@ -13,8 +15,8 @@ function placeObjects(objects) {
 }
 
 function update() {
-    ball.x += 5;
-    ball.y += 5;
+    ball.x += ball.vx;
+    ball.y += ball.vy;
     placeObjects([ball]);
 }
 

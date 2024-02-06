@@ -4,27 +4,10 @@
     height: 64px;
 }
 
-#bottom-wall{
-    position: absolute;
-    height: 20px;
-    left: 0;
-    width: 100%;
-    bottom: 2px;
-}
-
 #left-paddle, #right-paddle {
     position: absolute;
     width: 40px;
-    top: 30%;
     height: 250px;
-}
-
-#left-paddle {
-    left: 10px;
-}
-
-#right-paddle {
-    right: 10px; /* Adjust this value based on your layout */
 }
 
 body {

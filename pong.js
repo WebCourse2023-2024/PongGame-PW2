@@ -1,28 +1,66 @@
+let paddleMove = 5;
+let buttons = new Buttons();
+let ball;
+let leftPaddle;
+let rightPaddle;
+
+
 function Ball() {
     this.id = "ball";
     this.x = 0;
     this.y = 0;
-    this.vx = 5;
-    this.vy = 5;
+    this.vx = 10;
+    this.vy = 10;
 }
-
 
 function Paddle(paddle_id, left_position, right_position){
     this.id = paddle_id;
     this.left = left_position;
     this.top = 30;
     this.right = right_position;
-    this.place_paddle = function (){
-        console.log(this.id);
-        let paddleElement = document.getElementById(this.id);
-        console.log(paddleElement.getBoundingClientRect());
+    this.paddleElement = document.getElementById(this.id);
+    this.placePaddle = function (){
         if (this.id === "left-paddle"){
-            paddleElement.style.left = this.left + "px";
+            this.paddleElement.style.left = this.left + "px";
         } else {
-            paddleElement.style.right = this.right + "px";
+            this.paddleElement.style.right = this.right + "px";
         }
-        paddleElement.style.top = this.top + "%";
+        this.paddleElement.style.top = this.top + "%";
 
+    }
+
+    this.movePaddle = () => {
+        let body_element = document.querySelector("body");
+        let bodyElementHeight = body_element.getBoundingClientRect().height;
+        let paddleHeight = this.paddleElement.getBoundingClientRect().height;
+        //console.log(body_element.getBoundingClientRect());
+        console.log(this.paddleElement.getBoundingClientRect())
+        // console.log(this.paddleElement.getBoundingClientRect().height);
+        // console.log("p1_up: " + buttons.p1_up + "\n" +
+        //             "p1_down: " + buttons.p1_down + "\n" +
+        //             "p2_up: " + buttons.p2_up + "\n" +
+        //             "p2_down: " + buttons.p2_down + "\n");
+        if (this.id === "left-paddle"){
+            if (buttons.p1_up && this.top > 0)
+                this.top -= paddleMove;
+
+            if (buttons.p1_down &&
+                (this.top < 70))
+                this.top += paddleMove;
+
+        }
+
+        if (this.id === "right-paddle"){
+            if (buttons.p2_up && this.top > 0)
+                if (this.id === "right-paddle")
+                    this.top -= paddleMove;
+
+            if (buttons.p2_down &&
+                (this.top < 70))
+                this.top += paddleMove;
+        }
+
+        this.placePaddle();
     }
 }
 
@@ -35,10 +73,7 @@ function Buttons(){
 }
 
 
-let buttons = new Buttons();
-
-
-function track_player_input(event) {
+function trackPlayerInput(event) {
     if (event.type === "keydown") {
         switch (event.key) {
             case "a":
@@ -80,6 +115,9 @@ function update() {
     placeObjects([ball]);
     ball_bounce(ball);
 
+    leftPaddle.movePaddle();
+    rightPaddle.movePaddle();
+
     // let ballElement = document.getElementById("ball");
     // let ballProperties = ballElement.getBoundingClientRect();
     // //console.log(ballProperties);
@@ -107,19 +145,17 @@ function ball_bounce(ball){
     }
 }
 
-
-let ball;
-let leftPaddle;
-let rightPaddle;
-
-
 function init() {
     ball = new Ball();
     leftPaddle = new Paddle("left-paddle", 10, 0);
     rightPaddle = new Paddle("right-paddle", 0, 10);
 
-    leftPaddle.place_paddle();
-    rightPaddle.place_paddle();
+    leftPaddle.placePaddle();
+    rightPaddle.placePaddle();
+
+    // Set up event listeners for keyboard input
+    document.addEventListener("keydown", trackPlayerInput);
+    document.addEventListener("keyup", trackPlayerInput);
 
     setInterval(update, 100);
     //update();

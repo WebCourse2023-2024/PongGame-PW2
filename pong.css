@@ -1,0 +1,20 @@
+#ball {
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+#left-paddle, #right-paddle {
+    position: absolute;
+    width: 40px;
+    height: 250px;
+}
+
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+}

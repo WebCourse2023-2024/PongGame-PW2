@@ -32,16 +32,6 @@ function Paddle(paddle_id, left_position, right_position){
     }
 
     this.movePaddle = () => {
-        let body_element = document.querySelector("body");
-        let bodyElementHeight = body_element.getBoundingClientRect().height;
-        let paddleHeight = this.paddleElement.getBoundingClientRect().height;
-        //console.log(body_element.getBoundingClientRect());
-        console.log(this.paddleElement.getBoundingClientRect())
-        // console.log(this.paddleElement.getBoundingClientRect().height);
-        // console.log("p1_up: " + buttons.p1_up + "\n" +
-        //             "p1_down: " + buttons.p1_down + "\n" +
-        //             "p2_up: " + buttons.p2_up + "\n" +
-        //             "p2_down: " + buttons.p2_down + "\n");
         if (this.id === "left-paddle"){
             if (buttons.p1_up && this.top > 0)
                 this.top -= paddleMove;
@@ -61,7 +51,6 @@ function Paddle(paddle_id, left_position, right_position){
                 (this.top < 70))
                 this.top += paddleMove;
         }
-
         this.placePaddle();
     }
 }
@@ -120,16 +109,6 @@ function update() {
 
     leftPaddle.movePaddle();
     rightPaddle.movePaddle();
-
-    // let ballElement = document.getElementById("ball");
-    // let ballProperties = ballElement.getBoundingClientRect();
-    // //console.log(ballProperties);
-    //
-    // let leftPaddle = document.getElementById("left-paddle");
-    // console.log(leftPaddle.getBoundingClientRect());
-    //
-    // let rightPaddle = document.getElementById("right-paddle");
-    // console.log(rightPaddle.getBoundingClientRect());
 }
 
 
@@ -158,7 +137,6 @@ function wall_ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
     let bodyProperties = bodyElement.getBoundingClientRect();
-    //console.log(bodyProperties);
 
     if (ball.x < 0 || ball.x > bodyProperties.width - 60){
         ball.vx *= -1;
@@ -205,9 +183,7 @@ function init() {
     document.addEventListener("keyup", trackPlayerInput);
 
     setInterval(update, 100);
-    //update();
 }
-
 
 // Ensure the DOM is fully loaded before initializing
 document.addEventListener("DOMContentLoaded", function () {

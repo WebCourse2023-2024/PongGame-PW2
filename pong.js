@@ -113,7 +113,8 @@ function update() {
     ball.x += ball.vx;
     ball.y += ball.vy;
     placeObjects([ball]);
-    ball_bounce(ball);
+    wall_ball_bounce(ball);
+    bounceOnPaddle();
 
     leftPaddle.movePaddle();
     rightPaddle.movePaddle();
@@ -130,7 +131,7 @@ function update() {
 }
 
 
-function ball_bounce(ball){
+function wall_ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
     let bodyProperties = bodyElement.getBoundingClientRect();
@@ -144,6 +145,22 @@ function ball_bounce(ball){
         ball.vy *= -1;
     }
 }
+
+
+function bounceOnPaddle(){
+    const left = leftPaddle.paddleElement.getBoundingClientRect();
+    const right = rightPaddle.paddleElement.getBoundingClientRect();
+    const ballElement = document.getElementById(ball.id).getBoundingClientRect();
+
+    if (ball.y > left.y && ball.y - left.y < left.height)
+        if (ballElement.left - left.left < left.width)
+            ball.vx *= -1;
+
+    if (ball.y - right.y < right.height && ball.y > right.y)
+        if (right.left - ballElement.left < ballElement.width)
+            ball.vx *= -1
+}
+
 
 function init() {
     ball = new Ball();
@@ -164,5 +181,5 @@ function init() {
 
 // Ensure the DOM is fully loaded before initializing
 document.addEventListener("DOMContentLoaded", function () {
-   init() // Call init function to start the animation
+   init() // Call init function to start the animation.
 });

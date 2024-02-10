@@ -3,6 +3,8 @@ let buttons = new Buttons();
 let ball;
 let leftPaddle;
 let rightPaddle;
+let leftScore = 0;
+let rightScore = 0;
 
 
 function Ball() {
@@ -131,6 +133,13 @@ function update() {
 }
 
 
+function updateScore(){
+    let scoreArea = document.querySelector("#scores p");
+    scoreArea.innerText = `${leftScore} | ${rightScore}`;
+
+}
+
+
 function wall_ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
@@ -139,6 +148,13 @@ function wall_ball_bounce(ball){
 
     if (ball.x < 0 || ball.x > bodyProperties.width - 60){
         ball.vx *= -1;
+        if (ball.x < bodyProperties.width / 2){
+            rightScore++;
+            updateScore();
+        }else{
+            leftScore++;
+            updateScore();
+        }
     }
 
     if (ball.y < 0 || ball.y > bodyProperties.height - 63){

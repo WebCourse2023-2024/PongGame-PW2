@@ -10,6 +10,27 @@
     height: 250px;
 }
 
+h1{
+    position: absolute;
+    top: 0;
+    margin: 0;
+}
+
+p{
+    position: relative;
+    padding-top: 30px;
+    margin-left: 40px;
+}
+
+#scores{
+    position: absolute;
+    top: 10px;
+    left: 42%;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: #333;
+    display: flex; /* Added */
+}
 body {
     position: fixed;
     top: 0;

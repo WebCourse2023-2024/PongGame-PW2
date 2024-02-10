@@ -3,6 +3,8 @@ let buttons = new Buttons();
 let ball;
 let leftPaddle;
 let rightPaddle;
+let leftScore = 0;
+let rightScore = 0;
 
 
 function Ball() {
@@ -30,16 +32,6 @@ function Paddle(paddle_id, left_position, right_position){
     }
 
     this.movePaddle = () => {
-        let body_element = document.querySelector("body");
-        let bodyElementHeight = body_element.getBoundingClientRect().height;
-        let paddleHeight = this.paddleElement.getBoundingClientRect().height;
-        //console.log(body_element.getBoundingClientRect());
-        console.log(this.paddleElement.getBoundingClientRect())
-        // console.log(this.paddleElement.getBoundingClientRect().height);
-        // console.log("p1_up: " + buttons.p1_up + "\n" +
-        //             "p1_down: " + buttons.p1_down + "\n" +
-        //             "p2_up: " + buttons.p2_up + "\n" +
-        //             "p2_down: " + buttons.p2_down + "\n");
         if (this.id === "left-paddle"){
             if (buttons.p1_up && this.top > 0)
                 this.top -= paddleMove;
@@ -59,7 +51,6 @@ function Paddle(paddle_id, left_position, right_position){
                 (this.top < 70))
                 this.top += paddleMove;
         }
-
         this.placePaddle();
     }
 }
@@ -113,37 +104,71 @@ function update() {
     ball.x += ball.vx;
     ball.y += ball.vy;
     placeObjects([ball]);
-    ball_bounce(ball);
+    wall_ball_bounce(ball);
+    bounceOnPaddle();
 
     leftPaddle.movePaddle();
     rightPaddle.movePaddle();
-
-    // let ballElement = document.getElementById("ball");
-    // let ballProperties = ballElement.getBoundingClientRect();
-    // //console.log(ballProperties);
-    //
-    // let leftPaddle = document.getElementById("left-paddle");
-    // console.log(leftPaddle.getBoundingClientRect());
-    //
-    // let rightPaddle = document.getElementById("right-paddle");
-    // console.log(rightPaddle.getBoundingClientRect());
 }
 
 
-function ball_bounce(ball){
+function resetBall(){
+    let bodyElement = document.querySelector("body");
+    ball.x = bodyElement.getBoundingClientRect().width / 2;
+    ball.y = bodyElement.getBoundingClientRect().height / 2;
+    if (Math.random() < 0.5){
+        ball.vx = -10;
+    }else ball.vx = 10;
+    if (Math.random() < 0.5){
+        ball.vy = 10;
+    }else ball.vy = -10;
+    placeObjects([ball])
+}
+
+
+function updateScore(){
+    let scoreArea = document.querySelector("#scores p");
+    scoreArea.innerText = `${leftScore} | ${rightScore}`;
+    resetBall();
+}
+
+
+function wall_ball_bounce(ball){
 
     let bodyElement = document.querySelector("body");
     let bodyProperties = bodyElement.getBoundingClientRect();
-    //console.log(bodyProperties);
 
     if (ball.x < 0 || ball.x > bodyProperties.width - 60){
         ball.vx *= -1;
+        if (ball.x < bodyProperties.width / 2){
+            rightScore++;
+            updateScore();
+        }else{
+            leftScore++;
+            updateScore();
+        }
     }
 
     if (ball.y < 0 || ball.y > bodyProperties.height - 63){
         ball.vy *= -1;
     }
 }
+
+
+function bounceOnPaddle(){
+    const left = leftPaddle.paddleElement.getBoundingClientRect();
+    const right = rightPaddle.paddleElement.getBoundingClientRect();
+    const ballElement = document.getElementById(ball.id).getBoundingClientRect();
+
+    if (ball.y > left.y && ball.y - left.y < left.height)
+        if (ballElement.left - left.left < left.width)
+            ball.vx *= -1;
+
+    if (ball.y - right.y < right.height && ball.y > right.y)
+        if (right.left - ballElement.left < ballElement.width)
+            ball.vx *= -1
+}
+
 
 function init() {
     ball = new Ball();
@@ -158,11 +183,9 @@ function init() {
     document.addEventListener("keyup", trackPlayerInput);
 
     setInterval(update, 100);
-    //update();
 }
-
 
 // Ensure the DOM is fully loaded before initializing
 document.addEventListener("DOMContentLoaded", function () {
-   init() // Call init function to start the animation
+   init() // Call init function to start the animation.
 });

@@ -136,7 +136,6 @@ function update() {
 function updateScore(){
     let scoreArea = document.querySelector("#scores p");
     scoreArea.innerText = `${leftScore} | ${rightScore}`;
-
 }
 
 

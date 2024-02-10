@@ -133,9 +133,24 @@ function update() {
 }
 
 
+function resetBall(){
+    let bodyElement = document.querySelector("body");
+    ball.x = bodyElement.getBoundingClientRect().width / 2;
+    ball.y = bodyElement.getBoundingClientRect().height / 2;
+    if (Math.random() < 0.5){
+        ball.vx = -10;
+    }else ball.vx = 10;
+    if (Math.random() < 0.5){
+        ball.vy = 10;
+    }else ball.vy = -10;
+    placeObjects([ball])
+}
+
+
 function updateScore(){
     let scoreArea = document.querySelector("#scores p");
     scoreArea.innerText = `${leftScore} | ${rightScore}`;
+    resetBall();
 }
 
 
